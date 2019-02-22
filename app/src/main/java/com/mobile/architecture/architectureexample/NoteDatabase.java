@@ -14,11 +14,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 @Database(entities = {Note.class}, version = 1)
 public abstract class NoteDatabase extends RoomDatabase {
 
-    public static NoteDatabase instance;
+    private static NoteDatabase instance;
 
     public abstract NoteDao noteDao();
 
-    public static synchronized NoteDatabase getInstance(Context context){
+    static synchronized NoteDatabase getInstance(Context context) {
         if (instance ==null){
             instance = Room.databaseBuilder(context.getApplicationContext(),NoteDatabase.class
             ,"note_database")
@@ -40,7 +40,7 @@ public abstract class NoteDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>{
         private NoteDao noteDao;
 
-        public PopulateDbAsyncTask(NoteDatabase db) {
+        PopulateDbAsyncTask(NoteDatabase db) {
             noteDao = db.noteDao();
         }
 
